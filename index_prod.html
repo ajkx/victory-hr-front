@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <title>iView project</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+</head>
+<body>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+<div id="app">
+    <p>
+        <router-link to="/user/foo">/user/foo</router-link>
+        <router-link to="/user/foo/profile">/user/foo/profile</router-link>
+        <router-link to="/user/foo/posts">/user/foo/posts</router-link>
+        <router-link to="/user1/foo1/">/user1/foo1</router-link>
+    </p>
+    <router-view></router-view>
+</div>
+</body>
+    <script>
+        const User = {
+            template: `<div class="user"><h2>User {{ $route.params.id }}</h2><router-view></router-view></div>`
+        }
+        const UserHome = { template: '<div>Home</div>' }
+        const UserProfile = { template: '<div>Profile</div>' }
+        const UserPosts = { template: '<div>Posts</div>' }
+        const UserFoo = { template: '<div>Foo1</div>'}
+        const router = new VueRouter({
+            routes: [
+                { path: '/user/:id', component: User,
+                    children: [
+                        // UserHome will be rendered inside User's <router-view>
+                        // when /user/:id is matched
+                        { path: '', component: UserHome },
+
+                        // UserProfile will be rendered inside User's <router-view>
+                        // when /user/:id/profile is matched
+                        { path: 'profile', component: UserProfile },
+
+                        // UserPosts will be rendered inside User's <router-view>
+                        // when /user/:id/posts is matched
+                        { path: 'posts', component: UserPosts }
+                    ]
+                },
+                {
+                    path: '/user1/foo1',component: User,
+                        children: [
+                            { path: '',component:UserFoo}
+                        ]
+                }
+            ]
+        })
+
+        const app = new Vue({ router }).$mount('#app')
+    </script>
+</html>
