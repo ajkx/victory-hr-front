@@ -45,15 +45,16 @@ service.interceptors.response.use(
                     });
                     break;
                 case 1003:
-                    Message.error(data.msg);
+                    Message.error(data.message);
                     if(location.href.indexOf("login") <= -1){
-                            store.dispatch('FailLogOut').then(() =>{
+                        store.dispatch('FailLogOut').then(() =>{
                             location.reload();
+                            Message.error(data.message);
                         });
                     }
                     break;
                 default:
-                    Message.error(data.msg);
+                    Message.error(data.message);
                     break;
             }
             return Promise.reject(error);

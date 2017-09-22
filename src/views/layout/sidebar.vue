@@ -90,11 +90,11 @@
 </script>
 
 <style>
-    .sidebar {
-        position: fixed;
-        height: 100%;
 
+    .sidebar{
+        height: 100%;
     }
+
     .menu-item {
         font-size: 13px;
         color: #4a4a4a;

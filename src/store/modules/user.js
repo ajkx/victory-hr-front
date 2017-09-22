@@ -1,6 +1,6 @@
 
 import { setToken,removeToken,getToken } from '../../utils/auth';
-import { login,getInfo,logout } from '../../api/login';
+import { login,getUserInfo,logout } from '../../api/login';
 
 
 
@@ -57,7 +57,7 @@ const user = {
 
         GetInfo({ commit,state }){
           return new Promise((resolve,reject) => {
-              getInfo().then(response => {
+              getUserInfo().then(response => {
                   const data =response.data;
 
                   commit('SET_NAME', data.name);

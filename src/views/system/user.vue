@@ -3,9 +3,8 @@
         <div class="user-operation">
 
             <div style="float: right">
-                <Input size="small" v-model="searchValue" placeholder="请输入名称" style="width: 200px" on-enter=""
+                <Input size="small" v-model="listQuery.name" placeholder="输入名称或简称" style="width: 200px" @on-enter="GetList"
                     icon="ios-search" class="">
-
                 </Input>
             </div>
             <div class=""></div>
@@ -14,7 +13,7 @@
             <Table :data="tableData" :columns="tableColumns" stripe></Table>
             <div style="margin: 10px;overflow: hidden">
                 <div style="float: right;">
-                    <Page :total="total" :current="page" @on-change="changePage" show-total show-sizer></Page>
+                    <Page :total="total" :current="listQuery.page" :page-size="listQuery.size" @on-change="changePage" @on-page-size-change="changeSizePage" show-total show-sizer></Page>
                 </div>
             </div>
         </div>
@@ -22,20 +21,14 @@
 </template>
 
 <script>
+    import { getUsers,updateUserRole,updateUserStatus } from 'api/sys'
+
     export default {
         name: 'user',
         data() {
             return {
                 total: 0,
-                page: 1,
-                tableData: [{
-                    "id": 3,
-                    "name": "陈本德",
-                    "workCode": "SS071",
-                    "status": "dismiss_self",
-                    "createDate": "2014-09-22",
-                    "roles":[{"id": 1, "name": "超级管理员"},{"id": 2, "name": "超级管理员a"}]
-                }],
+                tableData: [],
                 tableColumns: [
                     {
                         title: '名称',
@@ -54,7 +47,6 @@
                             const index = params.index;
                             const roles = data.roles;
                             var str = "";
-                            console.log(roles);
                             for(var i = 0; i < roles.length; i++){
                                 str += roles[i].name + ", ";
                             }
@@ -100,7 +92,7 @@
                                     },
                                     on: {
                                         click: () => {
-                                            this.lock(id,type)
+                                            this.lock(id,lockText)
                                         }
                                     }
                                 },lockText)
@@ -109,21 +101,42 @@
                         }
                     }
                 ],
-                searchValue: '',
+                listQuery: {
+                    page: 1,
+                    size: 10,
+                    name: undefined,
+                    sort: 'id,desc'
+                },
             }
         },
+        created() {
+            this.GetList();
+        },
         methods: {
-            changePage(){
-
+            GetList(){
+                this.listQuery.page -= 1;
+                getUsers(this.listQuery).then(response => {
+                    this.tableData = response.data.content;
+                    this.total = response.data.totalElements;
+                    this.listQuery.page += 1;
+                });
             },
-            searchByName() {
-
+            changePage(val){
+                this.listQuery.page = val;
+                this.GetList();
+            },
+            changeSizePage(val) {
+                this.listQuery.size = val;
+                this.GetList();
             },
             update(id) {
-                console.log(id);
             },
-            lock(id,type){
-                console.log(id+ " "+type);
+            lock(id,str){
+                updateUserStatus(id).then(response =>{
+                    this.GetList();
+                }).catch(error => {
+                    this.$Message.error(str+"失败！");
+                });
             }
         }
     }
