@@ -1,9 +1,10 @@
 <template>
     <div>
         <div class="user-operation">
-
+            <Button type="primary" icon="plus-round" size="small">新增角色</Button>
             <div style="float: right">
-                <Input size="small" v-model="listQuery.name" placeholder="输入角色名" style="width: 200px" @on-enter="GetList"
+                <Input size="small" v-model="listQuery.name" placeholder="输入角色名" style="width: 200px"
+                       @on-enter="GetList"
                        icon="ios-search" class="">
                 </Input>
             </div>
@@ -11,9 +12,10 @@
         </div>
         <div class="table-query">
             <Table :data="tableData" :columns="tableColumns" stripe></Table>
-            <div style="margin: 10px;overflow: hidden">
+            <div style="margin: 10px 10px 10px 0 ;overflow: hidden">
                 <div style="float: right;">
-                    <Page :total="total" :current="listQuery.page" :page-size="listQuery.size" @on-change="changePage" @on-page-size-change="changeSizePage" show-total show-sizer></Page>
+                    <Page :total="total" :current="listQuery.page" :page-size="listQuery.size" @on-change="changePage"
+                          @on-page-size-change="changeSizePage" show-total show-sizer></Page>
                 </div>
             </div>
         </div>
@@ -21,7 +23,7 @@
 </template>
 
 <script>
-    import { getUsers,updateUserRole,updateUserStatus } from 'api/sys'
+    import {getRoles, updateRole, updateRoleStatus,deleteRole} from 'api/sys'
 
     export default {
         name: 'role',
@@ -44,55 +46,72 @@
                         render: (h, params) => {
                             const data = params.row;
                             const available = data.available;
-                            return available;
+                            var text = "启用";
+                            var color = "green";
+                            if (!available) {
+                                text = "禁用";
+                                color = "red";
+                            }
+                            return h('Tag', {
+                                props: {
+                                    color: color,
+                                }
+                            }, text);
                         }
                     },
                     {
                         title: '操作',
                         key: 'action',
-                        render: (h,params) => {
+                        render: (h, params) => {
                             const data = params.row;
                             const id = data.id;
-                            const isSuper = data.isSuper;
+                            const isSuper = data.super;
                             const available = data.available
-                            var lockText = "禁用";
-                            return '';
+                            var availableText = "禁用";
+                            //判断是否超级管理员
+                            if (isSuper) return '';
+
                             //控制方法执行锁定操作还是解锁操作
-//                            var type = 1;
-//                            if(locked == 1){
-//                                lockText = "";
-//                                type = 0;
-//                            }
-//
-//                            return h('div',[
-//                                h('a',{
-//                                    attrs: {
-//                                        href:'#'
-//                                    },
-//                                    on: {
-//                                        click: () => {
-//                                            this.update(id)
-//                                        }
-//                                    }
-//                                },'编辑角色'),
-//                                h('span',{
-//                                    attrs: {
-//                                        class:'divider'
-//                                    },
-//
-//                                }),
-//                                h('a',{
-//                                    attrs: {
-//                                        href:'#'
-//                                    },
-//                                    on: {
-//                                        click: () => {
-//                                            this.lock(id,lockText)
-//                                        }
-//                                    }
-//                                },lockText)
-//
-//                            ])
+                            if (!available) {
+                                availableText = "启用";
+                            }
+
+                            return h('div', [
+                                h('a', {
+                                    attrs: {
+                                        href: '#'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.update(id)
+                                        }
+                                    }
+                                }, '编辑'),
+                                h('span', {
+                                    attrs: {
+                                        class: 'divider'
+                                    },
+                                }),
+                                h('a', {
+                                    on: {
+                                        click: () => {
+                                            this.lock(id, availableText)
+                                        }
+                                    }
+                                }, availableText),
+                                h('span', {
+                                    attrs: {
+                                        class: 'divider'
+                                    },
+                                }),
+                                h('a', {
+                                    on: {
+                                        click: () => {
+                                            this.delete(id)
+                                        }
+                                    }
+                                }, '删除'),
+                            ])
                         }
                     }
                 ],
@@ -107,15 +126,15 @@
             this.GetList();
         },
         methods: {
-            GetList(){
+            GetList() {
                 this.listQuery.page -= 1;
-                getUsers(this.listQuery).then(response => {
+                getRoles(this.listQuery).then(response => {
                     this.tableData = response.data.content;
                     this.total = response.data.totalElements;
                     this.listQuery.page += 1;
                 });
             },
-            changePage(val){
+            changePage(val) {
                 this.listQuery.page = val;
                 this.GetList();
             },
@@ -124,16 +143,24 @@
                 this.GetList();
             },
             update(id) {
+
             },
-            lock(id,str){
-                updateUserStatus(JSON.stringify(id)).then(response =>{
+            delete(id) {
+                deleteRole(id).then(response =>{
+                    this.$Message.success("删除成功");
+                    this.GetList();
+                });
+            },
+            lock(id, str) {
+                updateRoleStatus(id).then(response => {
                     this.GetList();
                 }).catch(error => {
-                    this.$Message.error(str+"失败！");
+//                    console.log(error);
+//                    this.$Message.error(str+"失败！");
                 });
             }
         }
-    }
+    };
 </script>
 
 <style>

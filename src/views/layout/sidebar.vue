@@ -32,16 +32,16 @@
 
 <script>
     import sidebarItem from './sidebarItem.vue';
-    import { mapGetters } from 'vuex';
+    import {mapGetters} from 'vuex';
 
-    var currentSubMenu  = "";
+    var currentSubMenu = "";
 
     export default {
         name: 'sidebar',
-        components:{
+        components: {
             sidebarItem
         },
-        computed:{
+        computed: {
             ...mapGetters([
                 'permission_routers',
             ]),
@@ -55,34 +55,35 @@
                 theme2: 'light'
             }
         },
-        created: function(){
+        created: function () {
             var str = this.$route.path;
             var index = str.search(/\b\//);
-            if( index > -1){
-                str = str.substring(0,index);
+            if (index > -1) {
+                str = str.substring(0, index);
             }
             this.openNames = [str];
         },
-        methods:{
+        methods: {
             menuItemSelect(name) {
-                this.$router.push({ path: name});
+                this.$router.push({path: name});
             },
-            subMenuSelect(array){
+            subMenuSelect(array) {
                 var currentName = currentSubMenu;
-                if(array.length == 0){
+                if (array.length == 0) {
 //                    submenu不能折叠
 //                    this.openNames = [currentName];
 //                    this.$nextTick(function() {
 //                        this.$refs.menu1.updateOpened();
 //                    })
-                }else{
+                } else {
                     currentSubMenu = array[0];
                     currentName = array[0];
                 }
                 //todo 使用路由跳转会导致submenu初次点击没有动画效果 原因未明
-                this.$router.push({ path: currentName});
+                //由于懒加载
+                this.$router.push({path: currentName});
             },
-            test(){
+            test() {
                 console.log("test");
             }
         }
@@ -91,7 +92,7 @@
 
 <style>
 
-    .sidebar{
+    .sidebar {
         height: 100%;
     }
 
@@ -100,13 +101,14 @@
         color: #4a4a4a;
     }
 
-    .ivu-menu-item{
+    .ivu-menu-item {
         font-size: 13px !important;
     }
 
-    .sidebar .ivu-menu-item-selected i{
+    .sidebar .ivu-menu-item-selected i {
         color: #2d8cf0 !important;
     }
+
     .menu-item .ivu-icon {
         margin-right: 8px !important;
         font-size: 14px;
@@ -114,26 +116,28 @@
         /*vertical-align: middle;*/
     }
 
-    .ivu-icon-ios-arrow-down{
+    .ivu-icon-ios-arrow-down {
         font-size: 12px !important;
         /*margin-right: 0 !important;*/
     }
 
-    .sidebar .ivu-menu-opened .ivu-menu-submenu-title{
+    .sidebar .ivu-menu-opened .ivu-menu-submenu-title {
         background: #ecf6fd !important;
         border-left: 2px solid #2d8cf0;
         /*z-index: 2 !important;*/
     }
-    .sidebar .ivu-menu-opened .ivu-menu-submenu-title .ivu-icon{
+
+    .sidebar .ivu-menu-opened .ivu-menu-submenu-title .ivu-icon {
         color: #2d8cf0 !important;
     }
 
-    .sidebar .ivu-menu-opened .ivu-menu-item{
+    .sidebar .ivu-menu-opened .ivu-menu-item {
         padding-left: 52px !important;
     }
 
-    .sidebar .ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu) {
-         border-right: 0 !important;
+    .ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu) {
+        border-right: 0 !important;
+        z-index: 0 !important;
     }
 
     .sidebar .ivu-menu-submenu-title a {

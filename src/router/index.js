@@ -44,9 +44,9 @@ export const asyncRouterMap = [
         path: '/system',
         component: Layout,
         icon: 'code-working',
-        meta: { permission: 'system:view'},
+        meta: { permission: 'system:view',name: '系统管理'},
         children: [
-            { path: '', component: _import('system/index'), name:'系统管理', meta: { permission: 'system:view'},hidden:true},
+            { path: '', component: _import('system/index'),name:'系统管理', meta: { permission: 'system:view',index: true},hidden:true},
             { path: 'user',component: _import('system/user'),name:'用户管理',meta: { permission: 'system:user:view'} },
             { path: 'role',component: _import('system/role'),name:'角色管理',meta: { permission: 'system:role:view'} },
             { path: 'permission',component: _import('system/permission'),name:'权限管理',meta: { permission: 'system:permission:view'} },
@@ -56,9 +56,9 @@ export const asyncRouterMap = [
         path: '/hrm',
         component: Layout,
         icon: 'ios-monitor-outline',
-        meta: { permission: 'hrm:view'},
+        meta: { permission: 'hrm:view',name: '员工管理'},
         children: [
-            { path: '', component: _import('hrm/index'), name:'员工管理', meta: { permission: 'hrm:view'},hidden:true },
+            { path: '', component: _import('hrm/index'), name:'员工管理', meta: { permission: 'hrm:view',index: true},hidden:true },
             { path: 'user',component: _import('hrm/staff/index'),name:'员工信息',meta: { permission: 'hrm:staff:view'} },
             { path: 'org',component: _import('hrm/org/index'),name:'组织架构',meta: { permission: 'hrm:org:view'} },
         ]
@@ -67,9 +67,9 @@ export const asyncRouterMap = [
         path: '/attendance',
         component: Layout,
         icon: 'ios-infinite-outline',
-        meta: { permission: 'attendance:view'},
+        meta: { permission: 'attendance:view',name: '考勤管理'},
         children: [
-            { path: '', component: _import('attendance/index'), name: '考勤管理', meta: {permission: 'attendance:view'}, hidden:true },
+            { path: '', component: _import('attendance/index'), name: '考勤管理', meta: {permission: 'attendance:view',index: true}, hidden:true },
             { path: 'classes', component: _import('attendance/classes'), name: '班次管理', meta: {permission: 'attendance:classes:view'} }
         ]
     },

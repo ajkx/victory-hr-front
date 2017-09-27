@@ -65,7 +65,7 @@ service.interceptors.response.use(
     error => {
         //统一的异常处理
         if(error.response){
-            console.log("统一的异常处理！code = "+data.code);
+            console.log("统一的异常处理！code = "+error.response.data.code);
             var code = error.response.data.code;
             var msg = error.response.data.message;
             switch (code) {

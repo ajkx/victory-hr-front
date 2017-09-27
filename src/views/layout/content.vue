@@ -24,5 +24,6 @@
     .app-main{
         margin-top: 15px;
         padding: 0 20px;
+
     }
 </style>

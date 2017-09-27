@@ -65,7 +65,14 @@ export function updateRoleStatus(data) {
         headers: {
             'Content-Type': 'application/json'
         },
-        data: data
+        data: JSON.stringify(data)
+    });
+}
+
+export function deleteRole(id) {
+    return fetch({
+        url: '/role/'+id,
+        method: 'delete',
     });
 }
 

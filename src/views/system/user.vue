@@ -55,6 +55,25 @@
                         }
                     },
                     {
+                        title: '状态',
+                        key: 'locked',
+                        render: (h, params) => {
+                            const data = params.row;
+                            const locked = data.locked;
+                            var text = "正常";
+                            var color = "green";
+                            if(locked == 1){
+                                text = "锁定";
+                                color = "red";
+                            }
+                            return h('Tag', {
+                                props: {
+                                    color: color,
+                                }
+                            }, text);
+                        }
+                    },
+                    {
                         title: '操作',
                         key: 'action',
                         render: (h,params) => {
@@ -133,6 +152,8 @@
             },
             lock(id,str){
                 updateUserStatus(id).then(response =>{
+                    this.$Message.success(str + "成功");
+
                     this.GetList();
                 }).catch(error => {
                     this.$Message.error(str+"失败！");
