@@ -18,50 +18,50 @@
 </template>
 
 <script>
-    const numList = ['4', '0', '4'];
-    const ColorList = ['#ff9900','#ed3f14','#FF7373', '#FF4040', '#A60000', '#BF3030', '#FF0000'];
+    const numList = ['4', '0', '4']
+    const ColorList = ['#ff9900', '#ed3f14', '#FF7373', '#FF4040', '#A60000', '#BF3030', '#FF0000']
 
-    function plus(value){
-        value++;
+    function plus (value) {
+        value++
     }
     export default {
         name: 'error404',
-        data() {
+        data () {
             return {
                 info: numList[0],
-                color:'#1482f0',
+                color: '#1482f0',
                 count: 0
             }
         },
-        mounted:function(){
-            var that = this;
-            console.log(this.count);
-            var timer = setInterval(function(value){
-                that.count++;
-                if(that.count == 500){
-                    that.color = ColorList[0];
-                }else if(that.count == 1500){
-                    that.color = ColorList[1];
-                }else if(that.count == 3000){
-                    that.color = ColorList[2];
-                }else if(that.count == 5000){
-                    that.color = ColorList[3];
-                }else if(that.count == 7500){
-                    that.color = ColorList[4];
-                }else if(that.count == 10500){
-                    that.color = ColorList[5];
-                }else if(that.count == 14000){
-                    that.color = ColorList[6];
-                }else if(that.count > 18000){
-                    that.color = '#000';
-                    that.count = '???';
-                    clearInterval(timer);
+        mounted: function () {
+            var that = this
+            console.log(this.count)
+            var timer = setInterval(function (value) {
+                that.count++
+                if (that.count === 500) {
+                    that.color = ColorList[0]
+                } else if (that.count === 1500) {
+                    that.color = ColorList[1]
+                } else if (that.count === 3000) {
+                    that.color = ColorList[2]
+                } else if (that.count === 5000) {
+                    that.color = ColorList[3]
+                } else if (that.count === 7500) {
+                    that.color = ColorList[4]
+                } else if (that.count === 10500) {
+                    that.color = ColorList[5]
+                } else if (that.count === 14000) {
+                    that.color = ColorList[6]
+                } else if (that.count > 18000) {
+                    that.color = '#000'
+                    that.count = '???'
+                    clearInterval(timer)
                 }
-            },1);
+            }, 1)
         },
-        methods:{
-            plus(){
-                this.count++;
+        methods: {
+            plus () {
+                this.count++
             }
         }
     }

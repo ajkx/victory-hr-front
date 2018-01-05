@@ -7,7 +7,7 @@
 <script>
     export default {
         name: 'index',
-        data() {
+        data () {
             return {}
         }
     }

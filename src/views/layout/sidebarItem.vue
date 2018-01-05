@@ -33,10 +33,10 @@
         name: 'sidebarItem',
         props: {
             routers: {
-                type: Array     //限制传入的routers是数组 Vue会发警告
+                type: Array     // 限制传入的routers是数组 Vue会发警告
             }
         },
-        data() {
+        data () {
             return {}
         },
         methods: {}

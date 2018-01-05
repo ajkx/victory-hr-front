@@ -3,7 +3,7 @@
         <Menu mode="horizontal" :theme="theme">
             <div class="layout-header-nav">
                 <router-link to="/" class="layout-logo">
-                    <img class="layout-logo-img" src="/src/asset/v-logo2.png"/>
+                    <img class="layout-logo-img" :src="logoImg"/>
                 </router-link>
                 <div class="layout-nav-search">
                     <Select v-model="searchValue" filterable remote :remote-method="searchInfo" :loading="loading"
@@ -42,10 +42,13 @@
 </template>
 
 <script>
+    import logoImg from 'assets/v-logo2.png'
+
     export default {
         name: 'navbar',
-        data() {
+        data () {
             return {
+                logoImg: logoImg,
                 theme: 'light',
                 searchValue: '',
                 loading: false,
@@ -54,32 +57,32 @@
             }
         },
         computed: {
-            userInfo() {
-                return this.$store.getters.name + "(" + this.$store.getters.account + ")";
+            userInfo () {
+                return this.$store.getters.name + '(' + this.$store.getters.account + ')'
             }
         },
         methods: {
-            searchInfo(query) {
+            searchInfo (query) {
                 if (query !== '') {
-                    this.loading = true;
+                    this.loading = true
                     setTimeout(() => {
-                        this.loading = false;
+                        this.loading = false
                         const list = this.list.map(item => {
                             return {
                                 value: item,
                                 label: item
-                            };
-                        });
-                        this.options = list.filter(item => item.label.toLowerCase().indexOf(query.toLowerCase()) > -1);
-                    }, 200);
+                            }
+                        })
+                        this.options = list.filter(item => item.label.toLowerCase().indexOf(query.toLowerCase()) > -1)
+                    }, 200)
                 } else {
-                    this.options = [];
+                    this.options = []
                 }
             },
-            logout() {
+            logout () {
                 this.$store.dispatch('LogOut').then(() => {
-                    location.reload();
-                });
+                    location.reload()
+                })
             }
         }
     }

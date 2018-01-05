@@ -19,23 +19,22 @@
                 </ul>
             </Col>
             <Col :span="12">
-                <img src="/src/asset/401/401.gif" width="313" height="428" alt="Girl has dropped her ice cream.">
+                <img src="/src/assets/401/401.gif" width="313" height="428" alt="Girl has dropped her ice cream.">
             </Col>
         </Row>
     </div>
 </template>
 
 <script>
-
     export default {
         name: 'error401',
-        data() {
+        data () {
             return {
 
             }
         },
-        methods:{
-            back(){
+        methods: {
+            back () {
 
             }
         }

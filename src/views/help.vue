@@ -5,7 +5,7 @@
 <script>
     export default {
         name: 'help',
-        data() {
+        data () {
             return {}
         }
     }

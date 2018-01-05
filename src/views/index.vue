@@ -33,30 +33,31 @@
     <div class="index">
         <Row type="flex" justify="center" align="middle">
             <Col span="24">
-                <h1>
-                    <img src="https://raw.githubusercontent.com/iview/iview/master/assets/logo.png">
-                </h1>
-                <h2>
-                    <p>Welcome to your iView app!</p>
-                    <Button type="ghost" @click="handleStart">Start iView</Button>
-                </h2>
-                 <div id="particles-js"></div>
+            <h1>
+                <img src="https://raw.githubusercontent.com/iview/iview/master/assets/logo.png">
+            </h1>
+            <h2>
+                <p>Welcome to your iView app!</p>
+                <Button type="ghost" @click="handleStart">Start iView</Button>
+            </h2>
+            <div id="particles-js"></div>
             </Col>
         </Row>
 
     </div>
 </template>
 <script>
-     import prj from '../js/login.js';
+    /* eslint-disable no-unused-vars */
+    import prj from '../js/login.js'
 
     export default {
         methods: {
-            handleStart() {
+            handleStart () {
                 this.$Modal.info({
                     title: 'Bravo',
                     content: 'Now, enjoy the convenience of iView.'
-                });
+                })
             }
         }
-    };
+    }
 </script>

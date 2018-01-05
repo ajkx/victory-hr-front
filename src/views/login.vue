@@ -28,57 +28,53 @@
 </template>
 
 <script>
-    import generateJs from '../js/login.js';
+    import generateJs from '../js/login.js'
 
     export default {
         name: 'login',
-        data() {
+        data () {
             return {
                 formLogin: {
                     username: 'aa093',
                     password: '5607745'
                 },
-                formLoginRules:{
-                    username:[
-                        { required: true, message: '请输入用户名',trigger: 'change'}
+                formLoginRules: {
+                    username: [
+                        { required: true, message: '请输入用户名', trigger: 'change' }
                     ],
                     password: [
-                        { required: true, message: '请输入密码', trigger: 'change' },
+                        { required: true, message: '请输入密码', trigger: 'change' }
                     ]
                 },
                 loading: false
             }
         },
         methods: {
-            handleSubmit(){
+            handleSubmit () {
                 this.$refs.formLogin.validate((valid) => {
-                    if(valid){
-                        this.loading = true;
-                        this.$store.dispatch('Login',this.formLogin).then(data => {
-                            this.loading = false;
-                            if(!data.code || data.code == 0){
-                                this.$Message.success("登录成功!");
-                                this.$router.push({ path: 'home'});
-                            }else{
-                                this.$Message.error(data.message);
-                            }
+                    if (valid) {
+                        this.loading = true
+                        this.$store.dispatch('Login', this.formLogin).then(data => {
+                            this.loading = false
+                            this.$Message.success('登录成功!')
+                            this.$router.push({ path: 'home' })
                         }).catch(() => {
-                            this.loading = false;
-                        });
-                    }else{
-                        this.$Message.error('表单验证失败!');
+                            this.loading = false
+                        })
+                    } else {
+                        this.$Message.error('表单验证失败!')
                     }
                 })
-            },
+            }
         },
-        mounted: function(){
-            //挂载完成加载背景粒子效果
-            generateJs();
+        mounted: function () {
+            // 挂载完成加载背景粒子效果
+            generateJs()
         }
     }
 </script>
 
-<style>
+<style lang="scss" scoped>
     #particles-js {
         position: absolute;
         top: 0;
@@ -103,7 +99,7 @@
         margin:0 auto;
         width: 48px;
         height: 48px;
-        background: url(../asset/v-logo2.png) no-repeat;
+        background: url(../assets/v-logo2.png) no-repeat;
         background-size: contain;
         font: 0/0 a;
     }

@@ -17,10 +17,10 @@
 </template>
 
 <script>
-    import navbar from './navbar.vue';
-    import sidebar from './sidebar.vue';
-    import content from  './content.vue';
-    import levelbar from './levelbar.vue';
+    import navbar from './navbar.vue'
+    import sidebar from './sidebar.vue'
+    import content from './content.vue'
+    import levelbar from './levelbar.vue'
 
     export default {
         name: 'index',
@@ -29,7 +29,7 @@
             'sidebar': sidebar,
             'main-content': content,
             'levelbar': levelbar
-        },
+        }
     }
 </script>
 
