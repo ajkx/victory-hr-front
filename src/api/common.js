@@ -2,10 +2,10 @@ import fetch from '../utils/fetch'
 import qs from 'qs'
 import $ from 'jquery'
 
-export function list (url, query, data) {
+export function list (url, query, data, customUrl) {
     if (data !== undefined && !$.isEmptyObject(data)) {
         return fetch({
-            url: '/' + url + '/list',
+            url: customUrl ? '/' + url : '/' + url + '/list',
             method: 'post',
             params: query,
             data: data
@@ -19,6 +19,9 @@ export function list (url, query, data) {
     }
 }
 
+// export function customList(url, query, data) {
+//
+// }
 export function del (url, id) {
     return fetch({
         url: '/' + url + '/' + id,

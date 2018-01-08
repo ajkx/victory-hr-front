@@ -174,6 +174,34 @@ export const asyncRouterMap = [
                 ]
             },
             {
+                path: 'result',
+                component: _import('attendance/result/index'),
+                meta: {permission: 'attendance:result:view', name: '每日明细'},
+                children: [
+                    {
+                        path: '',
+                        component: _import('attendance/result/list'),
+                        name: '每日明细',
+                        meta: {permission: 'attendance:result:view', index: true},
+                        hidden: true
+                    }
+                ]
+            },
+            {
+                path: 'collect',
+                component: _import('attendance/result/index'),
+                meta: {permission: 'attendance:collect:view', name: '月度汇总'},
+                children: [
+                    {
+                        path: '',
+                        component: _import('attendance/result/collect'),
+                        name: '月度汇总',
+                        meta: {permission: 'attendance:collect:view', index: true},
+                        hidden: true
+                    }
+                ]
+            },
+            {
                 path: 'record',
                 component: _import('attendance/record/index'),
                 meta: {permission: 'attendance:record:view', name: '原始打卡'},

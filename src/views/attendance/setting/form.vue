@@ -4,17 +4,6 @@
         <Tabs value="base" size="small" :animated="false">
             <TabPane label="基础设置" name="base">
                 <Form :model="formItem" :label-width="100"  style="margin-left: 10px">
-                    <FormItem label="时间计算单位:">
-                        <Row>
-                            <Col span="6">
-                                <Select v-model="formItem.unitType" style="width:120px">
-                                    <Option value="min">按分钟计算</Option>
-                                    <Option value="halfHour">按半小时计算</Option>
-                                    <Option value="hour">按一小时计算</Option>
-                                </Select>
-                            </Col>
-                        </Row>
-                    </FormItem>
                     <FormItem label="忽略考勤人员:">
                         <Row>
                             <Col>
@@ -57,6 +46,17 @@
             </TabPane>
             <TabPane label="加班设置" name="ot">
                 <Form :model="formItem" :label-width="180" style="height:500px">
+                    <FormItem label="时间计算单位:">
+                        <Row>
+                            <Col span="6">
+                            <Select v-model="formItem.overtimeUnitType" style="width:120px">
+                                <Option value="min">按分钟计算</Option>
+                                <Option value="halfHour">按半小时计算</Option>
+                                <Option value="hour">按一小时计算</Option>
+                            </Select>
+                            </Col>
+                        </Row>
+                    </FormItem>
                     <FormItem label="加班时数计算方式:">
                         <RadioGroup v-model="formItem.calculateType">
                             <Radio label="regist" style="margin-right: 20px">按登记时间计算</Radio>
@@ -108,11 +108,11 @@
                 loading: false,
                 collapseValue: '1',
                 formItem: {
-                    unitType: 'min',
                     ignoreResources: [],
                     oddEvenWeek: 0,   // 是否开启大小周
                     oddResource: [],    // 单周 人员
                     evenResource: [],    // 双周 人员
+                    overtimeUnitType: 'min',
                     calculateType: 'regist',
                     beginMinute: 30,
                     endMinute: 30,
@@ -156,7 +156,6 @@
             handleSubmit (name) {
                 if (name === 'base') {
                     let data = {}
-                    data.unitType = this.formItem.unitType
                     data.ignoreResources = []
                     this.formItem.ignoreResources.forEach(item => {
                         data.ignoreResources.push(item.id)
@@ -182,6 +181,7 @@
                     })
                 } else if (name === 'ot') {
                     let data = {}
+                    data.overtimeUnitType = this.formItem.overtimeUnitType
                     data.calculateType = this.formItem.calculateType
                     data.beginMinute = this.formItem.beginMinute
                     data.endMinute = this.formItem.endMinute
@@ -206,12 +206,12 @@
                 return true
             },
             setFormItem (data) {
-                this.formItem.unitType = data.unitType
                 this.formItem.ignoreResources = data.ignoreResources
                 this.formItem.oddEvenWeek = data.oddEvenWeek
                 this.formItem.oddResource = data.oddResource
                 this.formItem.evenResource = data.evenResource
 
+                this.formItem.overtimeUnitType = data.overtimeUnitType
                 this.formItem.calculateType = data.calculateType
                 this.formItem.beginMinute = data.beginMinute
                 this.formItem.endMinute = data.endMinute

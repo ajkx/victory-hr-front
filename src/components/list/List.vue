@@ -1,7 +1,7 @@
 <template>
     <div>
         <slot name="header"></slot>
-        <Table :loading="loading" :columns="tableColumns" :data="tableData" class="table-panel"></Table>
+        <Table :loading="loading" :columns="tableColumns" :data="tableData" class="table-panel" :border="border"></Table>
         <div class="footer-panel">
             <div class="footer-toolbar">
                 <slot name="footer"></slot>
@@ -44,6 +44,14 @@
             listUrl: {
                 type: String,
                 required: true
+            },
+            customUrl: {
+                type: Boolean,
+                default: false
+            },
+            border: {
+                type: Boolean,
+                default: false
             },
             showSizer: {    // 是否显示条数的选择
                 type: Boolean,
@@ -113,7 +121,7 @@
                     } else {  // 首次载入，搜索全部的结果
                         this.listQuery.isAll = 1
                         this.loading = true
-                        list(this.listUrl, this.listQuery, this.listData).then(data => {
+                        list(this.listUrl, this.listQuery, this.listData, this.customUrl).then(data => {
                             this.total = data.totalElements
                             this.listQuery.page += 1
                             this.tableAllData = data.content
@@ -130,7 +138,7 @@
                 } else {
                     this.loading = true
                     // 每次都根据条件重新查询
-                    list(this.listUrl, this.listQuery, this.listData).then(data => {
+                    list(this.listUrl, this.listQuery, this.listData, this.customUrl).then(data => {
                         this.tableData = data.content
                         this.total = data.totalElements
                         this.listQuery.page += 1
